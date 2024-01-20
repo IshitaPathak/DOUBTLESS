@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "95378317768",
+    "project_id": "studysync-ce1f7",
+    "storage_bucket": "studysync-ce1f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95378317768:android:f8e1a6b1379d319c4ce0fd",
+        "android_client_info": {
+          "package_name": "com.example.study_sync"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4PlQXg1D_xkC8C9gVibThDyRcxM62VGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
