@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   String email = "";
   AuthServices authService = AuthServices();
   Stream? groups;
+  String groupName = "";
 
   @override
   void initState() {
@@ -198,7 +199,63 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  popUpDialog(BuildContext context) {}
+  void popUpDialog(BuildContext context) {
+    // TextEditingController groupNameController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Create a Group"),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("Enter the group name:"),
+              SizedBox(height: 10),
+              TextField(
+                // controller: groupNameController,
+                onChanged: (value) {
+                  setState(() {
+                    groupName = value;
+                  });
+                },
+                maxLength: 20,
+                decoration: InputDecoration(
+                  hintText: "Group Name",
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).primaryColor,
+              ),
+              child: Text(
+                "Cancel",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).primaryColor,
+              ),
+              child: Text(
+                "Create",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   groupList() {
     return StreamBuilder(
@@ -231,10 +288,15 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(
-            Icons.group,
-            color: Theme.of(context).primaryColor,
-            size: 76,
+          GestureDetector(
+            onTap: () {
+              popUpDialog(context);
+            },
+            child: Icon(
+              Icons.group,
+              color: Theme.of(context).primaryColor,
+              size: 76,
+            ),
           ),
           const SizedBox(
             height: 20,
