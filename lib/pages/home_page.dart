@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:study_sync/helper/helpers_function.dart';
 import 'package:study_sync/pages/auth/login_page.dart';
 import 'package:study_sync/pages/profile_page.dart';
 import 'package:study_sync/pages/search_page.dart';
 import 'package:study_sync/services/auth_services.dart';
+import 'package:study_sync/services/database_service.dart';
 import 'package:study_sync/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   String userName = "";
   String email = "";
   AuthServices authService = AuthServices();
+  Stream? groups;
 
   @override
   void initState() {
@@ -35,6 +38,14 @@ class _HomePageState extends State<HomePage> {
     await HelperFunction.getUserNameFromSF().then((value) {
       setState(() {
         userName = value!;
+      });
+    });
+    // getting the list of snapshot in our stream
+    await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+        .getUserGroups()
+        .then((snapshot) {
+      setState(() {
+        groups = snapshot;
       });
     });
   }
@@ -187,7 +198,68 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  groupList() {}
-
   popUpDialog(BuildContext context) {}
+
+  groupList() {
+    return StreamBuilder(
+      stream: groups,
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data['groups'] != null) {
+            if (snapshot.data['groups'].length != 0) {
+              return Text("hello");
+            } else {
+              return noGroupWidget();
+            }
+          } else {
+            return noGroupWidget();
+          }
+        } else {
+          return Center(
+            child: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor),
+          );
+        }
+      },
+    );
+  }
+
+  Widget noGroupWidget() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.group,
+            color: Theme.of(context).primaryColor,
+            size: 76,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          const Text(
+            "Oops! It looks like you haven't joined any community yet.",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          const Text(
+            "Tap on the group icon to create a community or use the search icon to find existing ones. If you encounter any issues, please reach out to our chat bot for assistance.",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
