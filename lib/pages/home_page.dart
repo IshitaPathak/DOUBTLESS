@@ -43,11 +43,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
         actions: [
           IconButton(
               iconSize: 37,
               splashColor: Colors.white,
-              color: Colors.black,
+              color: Colors.white,
               style: ButtonStyle(),
               onPressed: () {
                 nextScreen(context, const SearchPage());
@@ -57,9 +58,13 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
         title: const Text("JOIN COMMUNITITES",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.white)),
       ),
       drawer: Drawer(
+        backgroundColor: Colors.white,
         child: ListView(
           padding: EdgeInsets.symmetric(vertical: 50),
           children: [
@@ -82,20 +87,25 @@ class _HomePageState extends State<HomePage> {
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               leading: const Icon(Icons.group),
-              title: Text(
+              title: const Text(
                 "Communities",
                 style: TextStyle(color: Colors.black),
               ),
             ),
             ListTile(
               onTap: () {
-                nextScreen(context, ProfilePage());
+                nextScreen(
+                    context,
+                    ProfilePage(
+                      userName: userName,
+                      email: email,
+                    ));
               },
               selectedColor: Theme.of(context).primaryColor,
               // selected: true,
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              leading: const Icon(Icons.group),
+              leading: const Icon(Icons.person_2_outlined),
               title: const Text(
                 "Profile",
                 style: TextStyle(color: Colors.black),
@@ -110,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      title: Text(
+                      title: const Text(
                         "Logout",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -122,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                           onPressed: () {
                             Navigator.of(context).pop(); // Close the dialog
                           },
-                          child: Text(
+                          child: const Text(
                             "Cancel",
                             style: TextStyle(
                               color: Colors.grey,
@@ -140,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
-                          child: Text(
+                          child: const Text(
                             "Logout",
                             style: TextStyle(
                               color: Colors.white,
@@ -158,7 +168,7 @@ class _HomePageState extends State<HomePage> {
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               leading: const Icon(Icons.exit_to_app),
-              title: Text(
+              title: const Text(
                 "LogOut",
                 style: TextStyle(color: Colors.black),
               ),
@@ -166,6 +176,18 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      body: groupList(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          popUpDialog(context);
+        },
+        backgroundColor: Theme.of(context).primaryColor,
+        child: Icon(Icons.add, color: Colors.white, size: 30),
+      ),
     );
   }
+
+  groupList() {}
+
+  popUpDialog(BuildContext context) {}
 }
