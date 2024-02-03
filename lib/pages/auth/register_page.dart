@@ -1,26 +1,24 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:study_sync/helper/helpers_function.dart';
-import 'package:study_sync/pages/auth/register_page.dart';
+import 'package:study_sync/pages/auth/login_page.dart';
 import 'package:study_sync/pages/home_page.dart';
 import 'package:study_sync/services/auth_services.dart';
-import 'package:study_sync/services/database_service.dart';
 import 'package:study_sync/widgets/widgets.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
   String email = "";
   String password = "";
-  bool _isLoading = false;
+  String fullName = "";
   AuthServices authService = AuthServices();
   @override
   Widget build(BuildContext context) {
@@ -31,8 +29,7 @@ class _LoginPageState extends State<LoginPage> {
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor),
-            )
+                  color: Theme.of(context).primaryColor))
           : SingleChildScrollView(
               child: Form(
                 key: formKey,
@@ -49,22 +46,54 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(
                               fontSize: 40,
                               fontWeight: FontWeight.bold,
-                              wordSpacing: -2,
-                              letterSpacing: -0.24,
                               fontFamily: 'Custom1')),
                       const SizedBox(height: 10),
                       const Text(
-                        "Login now to get your doubts clear",
+                        "Create your acc now to join community",
                         style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            wordSpacing: -2,
+                            letterSpacing: -0.24),
                       ),
                       // Image.asset("assets/login.gif"),
                       const Image(
-                        image: AssetImage('assets/login.gif'),
+                        image: AssetImage('assets/register.png'),
                         width: 420,
                         height: 400,
                       ),
-                      const SizedBox(height: 30),
+                      // SizedBox(height: 30),
+                      TextFormField(
+                        decoration: textInputDecoration.copyWith(
+                          labelText: "Full Name",
+                          prefixIcon: Icon(
+                            Icons.person,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            fullName = value;
+                            // print(email);
+                          });
+                        },
+                        // also we need to check the validation
+                        validator: (value) {
+                          if (value!.isNotEmpty) {
+                            return null;
+                          } else {
+                            return "Name cannot be empty";
+                          }
+                        },
+                        // validator: (value) {
+                        //   return RegExp(
+                        //               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        //           .hasMatch(value!)
+                        //       ? null
+                        //       : "Please enter a valid email";
+                        // },
+                      ),
+                      SizedBox(height: 10),
                       TextFormField(
                         decoration: textInputDecoration.copyWith(
                           labelText: "Email",
@@ -130,10 +159,10 @@ class _LoginPageState extends State<LoginPage> {
                                   borderRadius: BorderRadius.circular(30),
                                 )),
                             onPressed: () {
-                              login();
+                              register();
                             },
                             child: const Text(
-                              "Sign In",
+                              "Register",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 16),
                             ),
@@ -142,12 +171,11 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 10),
                       Text.rich(TextSpan(
-                          text: "Don't have an account?  ",
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 14),
+                          text: "Already have an account?  ",
+                          style: TextStyle(color: Colors.black, fontSize: 14),
                           children: [
                             TextSpan(
-                                text: "Register Here",
+                                text: "Login Here",
                                 style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     decoration: TextDecoration.underline),
@@ -155,7 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                                 // TapGestureRecognizer.onTap = () {}),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    nextScreen(context, RegisterPage());
+                                    nextScreen(context, LoginPage());
                                   })
                           ])),
                       // ElevatedButton(
@@ -171,23 +199,19 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  login() async {
+  register() async {
     if (formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
       await authService
-          .loginWithUserNameandPassword(email, password)
+          .registerUserWithEmailandPassword(fullName, email, password)
           .then((value) async {
         if (value == true) {
-          QuerySnapshot snapshot =
-              await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-                  .gettingUserData(email);
-
-          // saving the values to our shared preferences
+          // saving the shared preference state
           await HelperFunction.saveUserLoggedInStatus(true);
           await HelperFunction.saveUserEmailSF(email);
-          await HelperFunction.saveUserNameSF(snapshot.docs[0]['fullName']);
+          await HelperFunction.saveUserNameSF(fullName);
           nextScreenReplace(context, HomePage());
         } else {
           // showSnackBar(context, Colors.primaryColor, value);
