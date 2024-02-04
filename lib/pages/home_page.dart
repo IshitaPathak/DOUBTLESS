@@ -6,6 +6,7 @@ import 'package:study_sync/pages/profile_page.dart';
 import 'package:study_sync/pages/search_page.dart';
 import 'package:study_sync/services/auth_services.dart';
 import 'package:study_sync/services/database_service.dart';
+import 'package:study_sync/widgets/group_tile.dart';
 import 'package:study_sync/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,12 +22,21 @@ class _HomePageState extends State<HomePage> {
   AuthServices authService = AuthServices();
   Stream? groups;
   String groupName = "";
+  bool isLoading = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     gettingUserData();
+  }
+
+  String getId(String res) {
+    return res.substring(0, res.indexOf("_"));
+  }
+
+  String getName(String res) {
+    return res.substring(res.indexOf("_") + 1);
   }
 
   gettingUserData() async {
@@ -210,7 +220,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text("Enter the group name:"),
+              const Text("Enter the group name:"),
               SizedBox(height: 10),
               TextField(
                 // controller: groupNameController,
@@ -220,7 +230,7 @@ class _HomePageState extends State<HomePage> {
                   });
                 },
                 maxLength: 20,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Group Name",
                 ),
               ),
@@ -234,19 +244,31 @@ class _HomePageState extends State<HomePage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).primaryColor,
               ),
-              child: Text(
+              child: const Text(
                 "Cancel",
                 style: TextStyle(color: Colors.white),
               ),
             ),
             ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
+              onPressed: () async {
+                if (groupName != "") {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+                      .createGroup(userName,
+                          FirebaseAuth.instance.currentUser!.uid, groupName)
+                      .whenComplete(() => isLoading = false);
+
+                  Navigator.of(context).pop();
+                  showSnackBar(context, Theme.of(context).primaryColor,
+                      "Group is created successfully");
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).primaryColor,
               ),
-              child: Text(
+              child: const Text(
                 "Create",
                 style: TextStyle(color: Colors.white),
               ),
@@ -264,7 +286,16 @@ class _HomePageState extends State<HomePage> {
         if (snapshot.hasData) {
           if (snapshot.data['groups'] != null) {
             if (snapshot.data['groups'].length != 0) {
-              return Text("hello");
+              return ListView.builder(
+                itemCount: snapshot.data['groups'].length,
+                itemBuilder: (context, index) {
+                  return GroupTile(
+                    username: snapshot.data['fullName'],
+                    groupId: getId(snapshot.data['groups'][index]),
+                    groupName: getName(snapshot.data['groups'][index]),
+                  );
+                },
+              );
             } else {
               return noGroupWidget();
             }

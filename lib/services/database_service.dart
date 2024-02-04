@@ -48,5 +48,10 @@ class DatabaseService {
       "members": FieldValue.arrayUnion(["${uid}_$userName"]),
       "groupId": documentReference.id,
     });
+
+    DocumentReference userDocumentReference = await userCollection.doc(uid);
+    return await userDocumentReference.update({
+      "groups": FieldValue.arrayUnion(["${documentReference.id}_$groupName"])
+    });
   }
 }
