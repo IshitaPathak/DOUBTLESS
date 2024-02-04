@@ -65,9 +65,23 @@ class DatabaseService {
   }
 
   // for gettig group admin
+  // Future getGroupAdmin(String groupId) async {
+  //   DocumentReference d = groupCollection.doc(groupId);
+  //   DocumentSnapshot documentSnapshot = await d.get();
+  //   return documentSnapshot(admin);
+  // }
+
   Future getGroupAdmin(String groupId) async {
     DocumentReference d = groupCollection.doc(groupId);
     DocumentSnapshot documentSnapshot = await d.get();
-    return documentSnapshot(admin);
+
+    // Check if the document exists
+    if (documentSnapshot.exists) {
+      // Access the 'admin' field using square brackets
+      return documentSnapshot['admin'];
+    } else {
+      // Handle the case when the document does not exist
+      return null; // or return a default value or handle it as needed
+    }
   }
 }
