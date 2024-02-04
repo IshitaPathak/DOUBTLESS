@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:study_sync/pages/group_info.dart';
 
 class DatabaseService {
   final String? uid;
@@ -15,6 +16,7 @@ class DatabaseService {
       "fullName": fullName,
       "email": email,
       "groups": [],
+      "members": [],
       "profilePic": "",
       "uid": uid,
     });
@@ -83,5 +85,10 @@ class DatabaseService {
       // Handle the case when the document does not exist
       return null; // or return a default value or handle it as needed
     }
+  }
+
+  // getting group members
+  getGroupMembers(groupId) async {
+    return groupCollection.doc(groupId).snapshots();
   }
 }
