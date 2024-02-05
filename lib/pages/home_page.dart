@@ -1,7 +1,9 @@
+import 'package:dialog_flowtter/dialog_flowtter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:study_sync/helper/helpers_function.dart';
 import 'package:study_sync/pages/auth/login_page.dart';
+import 'package:study_sync/pages/chat_bot.dart';
 import 'package:study_sync/pages/profile_page.dart';
 import 'package:study_sync/pages/search_page.dart';
 import 'package:study_sync/services/auth_services.dart';
@@ -17,6 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late DialogFlowtter dialogFlowtter;
   String userName = "";
   String email = "";
   AuthServices authService = AuthServices();
@@ -26,8 +29,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+
+    // Initialize dialogFlowtter
+    DialogFlowtter.fromFile().then(
+      (instance) {
+        setState(() {
+          dialogFlowtter = instance;
+        });
+      },
+    );
+
+    // Fetch user data
     gettingUserData();
   }
 
@@ -81,7 +94,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         title: const Text("JOIN COMMUNITITES",
             style: TextStyle(
-                fontSize: 24,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.white)),
       ),
@@ -130,6 +143,20 @@ class _HomePageState extends State<HomePage> {
               leading: const Icon(Icons.person_2_outlined),
               title: const Text(
                 "Profile",
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+            // for chatbot
+            ListTile(
+              onTap: () {
+                print("Chatbot icon tapped");
+                Navigator.pop(context); // Close drawer
+                openChatbotScreen(context, dialogFlowtter);
+              },
+              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              leading: Icon(Icons.chat),
+              title: Text(
+                "Chatbot",
                 style: TextStyle(color: Colors.black),
               ),
             ),

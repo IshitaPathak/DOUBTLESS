@@ -30,11 +30,11 @@ environment:
 dependencies:
   cloud_firestore: ^4.14.0
   cupertino_icons: ^1.0.2
+  dialog_flowtter: ^0.3.3
   firebase_auth: ^4.16.0
   firebase_core: ^2.24.2
   flutter:
     sdk: flutter
-  # flutter_launcher_icons: ^0.12.0
   flutterfire_cli: 0.3.0-dev.19
   shared_preferences: ^2.2.2
 
@@ -63,8 +63,9 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/login.gif
     - assets/
+    - assets/dialog_flow_auth.json 
+    # - assets/login.gif
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
