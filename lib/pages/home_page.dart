@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
         ],
         backgroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
-        title: const Text("JOIN COMMUNITITES",
+        title: const Text("JOIN COMMUNITES",
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
