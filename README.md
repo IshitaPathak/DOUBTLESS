@@ -6,12 +6,12 @@
 
 
 ## Problem Statement
-In today's fast-paced world, technology is constantly evolving, and staying up to date with new technologies has become increasingly important. Learning new technologies can be a challenging task, especially for beginners, who often encounter errors and difficulties that they are unable to resolve on their own. As a result, individuals may end up spending a lot of time searching for solutions on various websites and watching countless YouTube videos and end up with frustration.
-There are a lot of startups focussing on solving the current education system problems by providing free/low costs courses, but not many realize what difference a community can make.
+In today's fast-paced world, technology is constantly evolving, and staying up to date with new technologies has become increasingly important. Learning new technologies can be challenging, especially for beginners who face errors and difficulties they can't solve on their own. This often leads to frustration as individuals spend a lot of time searching for solutions online. This can result in some learners giving up on their learning journey. While many startups offer low-cost courses, the importance of community support in overcoming these challenges is often overlooked.
 
 ## Solution
-To address this problem, this project aims to provide a platform where users can seek help with their doubts and queries related to various technologies.
-Doubtless provides a platform for users to join groups, where they can interact with other learners and experts in the field, share their queries and collaborate with others to enhance their learning experience.
+To address this, our project Doubtless provides a platform where users can seek help with their tech-related queries. By joining groups, users can interact with fellow learners and experts, sharing their questions and collaborating to enhance their learning experience. This fosters a supportive community environment where users can swiftly resolve issues and accelerate their learning journey.
+
+This speeds up issue resolution, turning days of troubleshooting into just hours and makes learning smoother and more efficient for users especially beginners who are in their learning phase. We also offer a chatbot feature for instant assistance for app-related queries.
 
 ## Technology Used
 - [Flutter](https://docs.flutter.dev/) Flutter is an open-source UI software development toolkit created by Google. It enables the development of natively compiled applications for mobile, web, and desktop from a single codebase.
