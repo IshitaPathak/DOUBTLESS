@@ -22,3 +22,9 @@ Firebase Authentication provides secure and easy-to-implement user authenticatio
    - Firestore - 
 Firebase Firestore is a NoSQL cloud database that enables seamless data storage and retrieval. Doubtless uses Firestore to store user data.
 
+#
+
+ **APK file**: You can download the Doubtless APK file from [here](https://drive.google.com/file/d/1DaWoVFgeB466wSvbB8HgI_EmmGHUtISM/view?usp=sharing)
+
+ 
+ **Presentation Link**: For a overview of Doubtless, please refer to presentation [here](https://www.canva.com/design/DAF8XG085cs/10hgG7Zpy1dUbSZe1dWitQ/view?utm_content=DAF8XG085cs&utm_campaign=designshare&utm_medium=link&utm_source=editor).
