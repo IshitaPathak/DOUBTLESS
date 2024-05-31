@@ -6,12 +6,13 @@
 
 
 ## Problem Statement
-In today's fast-paced world, technology is constantly evolving, and staying up to date with new technologies has become increasingly important. Learning new technologies can be challenging, especially for beginners who face errors and difficulties they can't solve on their own. This often leads to frustration as individuals spend a lot of time searching for solutions online. This can result in some learners giving up on their learning journey. While many startups offer low-cost courses, the importance of community support in overcoming these challenges is often overlooked.
+The journey through my undergraduate studies was marked by persistent challenge that deeply impacted not just my own learnings, but that of my peers and fellow students. We often stuck, when dealing with bugs, figuring out coding problems, or sometimes not even know where to start or which resources to follow. This resulted in a significant amount of time being spent unnecessarily, as tasks that could have been completed in a day often took three to four days to figure out. The lack of guidance, not knowing about opportunities, and the sense of isolation further compounded these difficulties. Additionaly, introvert students due to their lack of audacity to speak up, often refrain from asking their doubts.
 
 ## Solution
-To address this, our project Doubtless provides a platform where users can seek help with their tech-related queries. By joining groups, users can interact with fellow learners and experts, sharing their questions and collaborating to enhance their learning experience. This fosters a supportive community environment where users can swiftly resolve issues and accelerate their learning journey.
+It's crucial to address this issue, as I have closely witnessed the struggles among peers. The challenges students face,can deter them from continuing their learning efforts.While there are many startups offers courses, but the importance of community support in overcoming these challanges is often overlooked. 
+So I embarked on a mission to bridge the gap between aspiration and achievement. The result was 'Doubtless' not merely an application, but a lifeline for learners. 
 
-This speeds up issue resolution, turning days of troubleshooting into just hours and makes learning smoother and more efficient for users especially beginners who are in their learning phase. We also offer a chatbot feature for instant assistance for app-related queries.
+It is designed to make learning easier by connecting learners with experienced individuals where users can join groups based on what they want to learn and ask their questions. It covers different tech domains, so everyone can find something that interests them. This app helps  in speed up problem-solving, turning days of troubleshooting into just few hours.
 
 ## Technology Used
 - [Flutter](https://docs.flutter.dev/) Flutter is an open-source UI software development toolkit created by Google. It enables the development of natively compiled applications for mobile, web, and desktop from a single codebase.
